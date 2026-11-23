@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitFlow | Build Better Habits</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AUTHENTICATION -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-brand">
+    <div class="brand-icon">H</div>
+    <span>HabitFlow<span class="dot">.</span></span>
+  </div>
+
+  <div class="auth-layout">
+    <div class="auth-intro">
+      <span class="auth-tag">YOUR PERSONAL HABIT COMPANION</span>
+      <h1>Small habits.<br><span>Big changes.</span></h1>
+      <p>Build consistency, track your progress and become a better version of yourself every day.</p>
+
+      <div class="auth-benefits">
+        <div><span>✓</span> Track your daily habits</div>
+        <div><span>✓</span> Visualize your progress</div>
+        <div><span>✓</span> Keep your data synced online</div>
+      </div>
+
+      <div class="auth-decoration">
+        <div class="deco-card">
+          <div class="deco-top">
+            <span>Daily progress</span>
+            <span>✦</span>
+          </div>
+          <strong>Consistency is everything.</strong>
+          <div class="deco-progress"><span></span></div>
+          <small>One step at a time.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-heading">
+        <span class="auth-mini">WELCOME TO HABITFLOW</span>
+        <h2 id="authTitle">Welcome back!</h2>
+        <p id="authSubtitle">Sign in to continue your journey.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab">Login</button>
+        <button class="auth-tab" id="signupTab">Sign Up</button>
+      </div>
+
+      <form id="authForm">
+        <div id="nameGroup" class="form-group hidden">
+          <label>Full Name</label>
+          <input id="authName" type="text" placeholder="Enter your full name" maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input id="authEmail" type="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-field">
+            <input id="authPassword" type="password" placeholder="Enter your password" minlength="6" required>
+            <button type="button" id="togglePassword">Show</button>
+          </div>
+        </div>
+
+        <button type="button" class="forgot-link" id="forgotPassword">Forgot password?</button>
+
+        <div id="authError" class="auth-message"></div>
+
+        <button type="submit" class="auth-submit" id="authSubmit">
+          Login to Account →
+        </button>
+      </form>
+
+      <p class="auth-switch" id="authSwitch">
+        Don't have an account? <button type="button" id="switchSignup">Sign up</button>
+      </p>
+
+      <p class="auth-terms">Your progress. Your journey. Your space.</p>
+    </div>
+  </div>
+
+  <div class="auth-footer">© 2026 HabitFlow. Made for consistency.</div>
+</div>
+
+
+<!-- MAIN APPLICATION -->
+<div id="appScreen" class="app hidden">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <span>HabitFlow<span class="dot">.</span></span>
+    </div>
+
+    <div class="nav-label">MENU</div>
+
+    <nav>
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-page="habits"><span>◈</span> My Habits</button>
+      <button class="nav-item" data-page="calendar"><span>▦</span> Calendar</button>
+      <button class="nav-item" data-page="analytics"><span>▥</span> Analytics</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="nav-label">PREFERENCES</div>
+      <button class="nav-item" id="themeToggle"><span id="themeIcon">☾</span> Dark Mode</button>
+      <button class="nav-item" id="logoutBtn"><span>↪</span> Logout</button>
+
+      <div class="profile">
+        <div class="avatar" id="profileAvatar">A</div>
+        <div>
+          <strong id="profileName">My Workspace</strong>
+          <small id="profileEmail">Personal Account</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <div class="date-text" id="todayDate"></div>
+        <h2 id="pageTitle">Dashboard</h2>
+      </div>
+      <button class="add-btn" id="openModal">＋ Add Habit</button>
+    </header>
+
+    <section id="dashboardPage" class="page">
+      <div class="welcome">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL JOURNEY</p>
+          <h1>Build better habits.<br><span>Become better every day.</span></h1>
+          <p class="welcome-sub">Small steps today, big results tomorrow.</p>
+        </div>
+        <div class="welcome-icon">✦</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-top"><span>Total Habits</span><span>◈</span></div>
+          <h2 id="totalHabits">0</h2>
+          <small>Active habits</small>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>Completed Today</span><span>✓</span></div>
+          <h2 id="completedToday">0</h2>
+          <small>Habits completed</small>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>Today's Progress</span><span>↗</span></div>
+          <h2 id="todayProgress">0%</h2>
+          <small>Daily completion rate</small>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>Best Streak</span><span>♨</span></div>
+          <h2 id="bestStreak">0</h2>
+          <small>Consecutive days</small>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="panel">
+          <div class="panel-heading">
+            <div><h3>Today's Habits</h3><p>Stay consistent, one day at a time.</p></div>
+            <span class="date-badge" id="todayBadge">Today</span>
+          </div>
+          <div id="todayHabits" class="habit-list"></div>
+          <div class="empty-state" id="emptyToday">
+            <span>✧</span><h3>No habits yet</h3>
+            <p>Start building your routine today.</p>
+            <button class="text-btn" onclick="openHabitModal()">+ Create your first habit</button>
+          </div>
+        </div>
+
+        <div class="panel progress-panel">
+          <div class="panel-heading">
+            <div><h3>Daily Progress</h3><p>Your completion overview.</p></div>
+          </div>
+          <div class="progress-circle" id="progressCircle">
+            <div><strong id="circlePercent">0%</strong><small>Completed</small></div>
+          </div>
+          <div class="progress-info">
+            <span>Completed habits</span><strong id="circleCount">0 / 0</strong>
+          </div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+        </div>
+      </div>
+
+      <div class="panel weekly-panel">
+        <div class="panel-heading">
+          <div><h3>Weekly Activity</h3><p>Your habit completion over the last 7 days.</p></div>
+          <span class="date-badge">Last 7 Days</span>
+        </div>
+        <div class="chart-wrap"><canvas id="weeklyChart"></canvas></div>
+      </div>
+    </section>
+
+    <section id="habitsPage" class="page hidden">
+      <div class="section-intro">
+        <h2>My Habits</h2>
+        <p>Manage your daily routines and track your consistency.</p>
+      </div>
+      <div id="allHabits" class="all-habits-grid"></div>
+    </section>
+
+    <section id="calendarPage" class="page hidden">
+      <div class="panel calendar-panel">
+        <div class="calendar-header">
+          <div><h3>Habit Calendar</h3><p>Track your progress throughout the month.</p></div>
+          <div class="calendar-controls">
+            <button id="prevMonth">‹</button>
+            <strong id="monthLabel"></strong>
+            <button id="nextMonth">›</button>
+          </div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div class="calendar-legend">
+          <span><i class="legend-dot done"></i> Completed</span>
+          <span><i class="legend-dot partial"></i> Partial</span>
+          <span><i class="legend-dot"></i> No activity</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="analyticsPage" class="page hidden">
+      <div class="section-intro">
+        <h2>Your Analytics</h2>
+        <p>Understand your progress and improve your consistency.</p>
+      </div>
+      <div class="stats-grid analytics-stats">
+        <div class="stat-card">
+          <div class="stat-top"><span>Total Completions</span><span>✓</span></div>
+          <h2 id="totalCompletions">0</h2>
+          <small>All-time completed habits</small>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><span>Average Progress</span><span>↗</span></div>
+          <h2 id="averageProgress">0%</h2>
+          <small>Overall daily average</small>
+        </div>
+      </div>
+      <div class="panel analytics-panel">
+        <div class="panel-heading">
+          <div><h3>Completion Overview</h3><p>Daily completed habits for the last 30 days.</p></div>
+        </div>
+        <div class="chart-wrap large-chart"><canvas id="monthlyChart"></canvas></div>
+      </div>
+    </section>
+
+    <footer>Made for consistency. © 2026 HabitFlow.</footer>
+  </main>
+</div>
+
+<!-- HABIT MODAL -->
+<div class="modal-overlay" id="habitModal">
+  <div class="modal">
+    <div class="modal-heading">
+      <div><h2>Create New Habit</h2><p>Make a small commitment to yourself.</p></div>
+      <button class="close-btn" id="closeModal">×</button>
+    </div>
+
+    <form id="habitForm">
+      <label>Habit Name</label>
+      <input type="text" id="habitName" placeholder="e.g. Read 20 minutes" maxlength="45" required>
+
+      <label>Choose an Icon</label>
+      <div class="emoji-options" id="emojiOptions">
+        <button type="button" class="emoji selected">📚</button>
+        <button type="button" class="emoji">💧</button>
+        <button type="button" class="emoji">🏃</button>
+        <button type="button" class="emoji">🧘</button>
+        <button type="button" class="emoji">💻</button>
+        <button type="button" class="emoji">✍️</button>
+        <button type="button" class="emoji">🎯</button>
+        <button type="button" class="emoji">💪</button>
+      </div>
+
+      <label>Category</label>
+      <select id="habitCategory">
+        <option>Personal Growth</option>
+        <option>Health & Fitness</option>
+        <option>Education</option>
+        <option>Productivity</option>
+        <option>Mindfulness</option>
+        <option>Other</option>
+      </select>
+      <div id="habitError" class="auth-message"></div>
+      <button type="submit" class="submit-btn">Create Habit</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
